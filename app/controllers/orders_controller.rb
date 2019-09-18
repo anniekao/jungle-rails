@@ -2,7 +2,16 @@ class OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    raise @order
+    @items = @order.line_items
+    @products = []
+    
+    @items.each do |item|
+      product = Product.find(item[:product_id])
+      @products << product
+    end
+    @total = (@products.map{|entry| entry.price_cents * entry[:quantity]}.sum) / 100.0
+    # raise @products.inspect
+    # raise @total.inspect
   end
 
   def create
