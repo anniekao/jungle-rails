@@ -9,7 +9,7 @@ class Admin::CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-
+    raise @category.inspect
     if @category.save
       redirect_to [:admin, :categories], notice: 'Category created!'
     else
@@ -19,6 +19,12 @@ class Admin::CategoriesController < ApplicationController
 
   def edit
     @category = Category.find(params[:id])
+  end
+
+  def update
+    @category = Category.find(params[:id])
+    @category.update(name: params[:category][:name])
+    redirect_to [:admin, :categories], notice: 'Category edited!'
   end
 
   private
