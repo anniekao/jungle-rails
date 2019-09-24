@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-
-RSpec.feature 'They see all products', type: :feature, js:true do
-  before :each do
+RSpec.feature "ProductDetails", type: :feature, js:true do
+   before :each do
     @category = Category.create! name: 'Apparel'
 
     10.times do |n|
@@ -16,13 +15,10 @@ RSpec.feature 'They see all products', type: :feature, js:true do
     end
   end
 
-  scenario 'They see all products' do    
-    # ACT
+  scenario 'It visits a product page' do
     visit root_path
-
-    # DEBUG/VERIFY
-    # save_screenshot
-
-    expect(page).to have_css 'article.product', count: 10
+    linkText = @category.products[0].name
+    click_link(linkText)
   end
+
 end
